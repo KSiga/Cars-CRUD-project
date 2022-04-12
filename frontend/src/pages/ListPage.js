@@ -137,6 +137,8 @@ class ListPage extends Component {
             alert.innerHTML += `Model: ${car.model}<br/>`;
             alert.innerHTML += `Kolor: ${car.color}<br/>`;
             alert.innerHTML += `Koszt: ${car.cost}$<br/>`;
+            const status = car.status ? `aktywny` : `nieaktywny`;
+            alert.innerHTML += `Status: ${status}`;
 
             listPageWrapper.appendChild(alert);
 

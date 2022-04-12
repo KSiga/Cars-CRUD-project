@@ -10,6 +10,7 @@ function ShowCar(props) {
             status: Boolean(props.status),
             cost: Number(props.cost),
             _id: Number(props._id),
+            date: props.date,
         })
         props.onEdit(editCar);
     }

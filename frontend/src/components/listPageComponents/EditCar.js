@@ -44,6 +44,7 @@ function EditCar(props) {
             status: Boolean(status),
             cost: Number(cost),
             _id: Number(props._id),
+            date: props.date,
         }
 
         const validation = props.onValidation(car);
