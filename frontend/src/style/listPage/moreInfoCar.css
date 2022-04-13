@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.moreInfoCar {
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    height: 280px;
+    background-color: rgb(182, 182, 182);
+}

@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import '../style/listPage/editCar.css';
 import '../style/listPage/addCar.css';
 import '../style/listPage/sortCar.css';
+import '../style/listPage/moreInfoCar.css';
 
 const customStyles = { // style dla Modala
     content: {
