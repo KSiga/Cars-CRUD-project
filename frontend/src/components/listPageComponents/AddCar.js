@@ -112,15 +112,3 @@ function AddCar(props) {
 }
 
 export default AddCar;
-
-/*
-    const costInput = document.getElementById("costInput");
-
-    const invalidChars = ["-", "+", "e"];
-
-    costInput.addEventListener("keydown", function (e) {
-        if (invalidChars.includes(e.key)) {
-            e.preventDefault();
-        }
-    });
-*/

@@ -4,12 +4,15 @@ import Car from '../components/listPageComponents/Car';
 import EditCar from '../components/listPageComponents/EditCar';
 import AddCar from '../components/listPageComponents/AddCar';
 import SortCar from '../components/listPageComponents/SortCar';
+import SearchCar from '../components/listPageComponents/SearchCar';
+import FilteredCar from '../components/listPageComponents/FilteredCar';
 import Modal from 'react-modal';
 
 import '../style/listPage/editCar.css';
 import '../style/listPage/addCar.css';
 import '../style/listPage/sortCar.css';
 import '../style/listPage/moreInfoCar.css';
+import '../style/listPage/searchCar.css';
 
 const customStyles = { // style dla Modala
     content: {
@@ -36,7 +39,7 @@ class ListPage extends Component {
                     date: '2022-02-24'
                 },
                 {
-                    _id: 1, brand: 'Citroen', model: 'Berlingo', color: 'white', status: true, cost: '70',
+                    _id: 1, brand: 'citroen', model: 'Berlingo', color: 'white', status: true, cost: '70',
                     date: '2022-03-12',
                 },
                 {
@@ -44,11 +47,11 @@ class ListPage extends Component {
                     date: '2022-03-18',
                 },
                 {
-                    _id: 3, brand: 'Audi', model: 'A4', color: 'black', status: false, cost: '50',
+                    _id: 3, brand: 'audi', model: 'A4', color: 'black', status: false, cost: '50',
                     date: '2022-03-25',
                 },
                 {
-                    _id: 4, brand: 'Citroen', model: 'C4', color: 'black', status: false, cost: '90',
+                    _id: 4, brand: 'citroen', model: 'C4', color: 'black', status: false, cost: '90',
                     date: '2022-04-06',
                 },
                 {
@@ -58,10 +61,9 @@ class ListPage extends Component {
             ],
             showModal: false,
             editCar: {},
+            carsFiltered: [],
         }
     }
-
-
 
     carAdd = (car) => {
         const cars = [...this.state.cars];
@@ -81,8 +83,11 @@ class ListPage extends Component {
 
     carDelete = _id => {
         let cars = [...this.state.cars];
+        let carsFiltered = [...this.state.carsFiltered]
         cars = cars.filter(car => car._id !== _id);
+        carsFiltered = carsFiltered.filter(car => car._id !== _id);
         this.setState({ cars });
+        this.setState({ carsFiltered });
     }
 
     toggleModal() {
@@ -98,6 +103,12 @@ class ListPage extends Component {
 
     carShowSorted(cars) {
         this.setState({ cars });
+    }
+
+    carChangeSearch(cars) {
+        console.log(cars);
+        this.setState({ carsFiltered: cars });
+        console.log(this.state.carsFiltered);
     }
 
     carValidation = (car) => {
@@ -122,7 +133,6 @@ class ListPage extends Component {
         if (car.color === '') {
             colorCorrect = false;
         }
-
 
         if (car.cost === '' || car.cost === 0) {
             costCorrect = false;
@@ -167,6 +177,14 @@ class ListPage extends Component {
     }
 
     render() {
+
+        const carListFiltered = this.state.carsFiltered.map(car => (
+            <FilteredCar key={car._id} {...car}
+                onDelete={() => this.carDelete(car._id)}
+                onEdit={(car) => this.carEditHandler(car)}
+            />
+        ))
+
         const carList = this.state.cars.map(car => (
             <Car key={car._id} {...car}
                 onDelete={() => this.carDelete(car._id)}
@@ -190,12 +208,19 @@ class ListPage extends Component {
                             onSort={car => this.carShowSorted(car)}
                         />
                     </div>
+                    <div className='searchCarComponent'>
+                        <SearchCar
+                            cars={[...this.state.cars]}
+                            onChange={(cars) => this.carChangeSearch(cars)}
+                        />
+                    </div>
                 </div>
 
                 <div className='listPageRight'>
                     <div className='sortPanel'>
                     </div>
                     {carList}
+                    {carListFiltered}
                     <Modal
                         isOpen={this.state.showModal}
                         style={customStyles}

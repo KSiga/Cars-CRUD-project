@@ -92,6 +92,15 @@ header img {
     background-color: rgb(150, 150, 150);
 }
 
+.carList .carInformation2 {
+    width: 84%;
+    height: 130px;
+    font-size: 1.2rem;
+    margin-right: 20px;
+    padding: 4px;
+    background-color: rgb(80, 235, 49);
+}
+
 .carList .carButtons {
     display: flex;
     flex-wrap: wrap;
