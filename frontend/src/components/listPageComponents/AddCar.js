@@ -106,9 +106,7 @@ function AddCar(props) {
         ) : (
             <button className='buttonShowForm' onClick={() => toggleAddForm()}>Dodaj nowe auto</button>
         )
-
     )
-
 }
 
 export default AddCar;

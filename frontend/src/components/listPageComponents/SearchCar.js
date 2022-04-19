@@ -28,6 +28,7 @@ function SearchCar(props) {
 
   const searchButton = () => {
     props.onChange(resultTest);
+    setSearchTerm('');
   }
 
   return (
@@ -37,7 +38,7 @@ function SearchCar(props) {
       <button onClick={() => searchButton()}>Szukaj</button>
       <ul>
         {resultTest.map(item => (
-          <li>{item.brand}</li>
+          <li key={item._id}>{item.brand}</li>
         ))}
       </ul>
     </div >

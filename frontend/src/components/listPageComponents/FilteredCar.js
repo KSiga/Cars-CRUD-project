@@ -18,7 +18,7 @@ function FilteredCar(props) {
 
     return (
         <div className='carList'>
-            <div className='carInformation2'>
+            <div className='carInformation'>
                 {props.model} {props.brand} {props.color} {String(props.status)} {props.cost} id: {props._id}
                 _data: {props.date}
                 <Link

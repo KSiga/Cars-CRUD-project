@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import { Component } from 'react';
 import Car from '../components/listPageComponents/Car';
 import EditCar from '../components/listPageComponents/EditCar';
@@ -120,6 +120,19 @@ class ListPage extends Component {
     }
 
     carChangeSearch(cars) {
+        let carListError = document.querySelector('.carListError');
+        if (cars.length === 0) {
+            if (!Boolean(carListError)) {
+                let divCarListError = document.createElement('div');
+                divCarListError.classList.add('carListError');
+                divCarListError.innerText = 'Brak wyników wyszukiwania';
+                let listPageRight = document.querySelector('.listPageRight');
+                listPageRight.appendChild(divCarListError);
+            }
+        }
+        if (carListError && cars.length > 0) {
+            carListError.parentNode.removeChild(carListError);
+        }
         this.setState({ carsFiltered: cars });
     }
 
@@ -136,6 +149,7 @@ class ListPage extends Component {
             colorIncorrect: 'Nie podano koloru',
             costIncorrect: 'Nie podano kosztu',
         })
+
         if (car.brand === '') {
             brandCorrect = false;
         }
@@ -189,8 +203,7 @@ class ListPage extends Component {
     }
 
     render() {
-
-        const carList = this.state.carsFiltered.map(car => (
+        let carList = this.state.carsFiltered.map(car => (
             <FilteredCar key={car._id} {...car}
                 onDelete={() => this.carDelete(car._id)}
                 onEdit={(car) => this.carEditHandler(car)}
