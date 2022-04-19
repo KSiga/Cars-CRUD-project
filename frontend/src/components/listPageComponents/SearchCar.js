@@ -2,13 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 function SearchCar(props) {
   // console.log(props.cars[1]);console.log(carsArray[0][1].brand);let carsArray = Object.values(props);
-  let carsTest = [];
-
-  let carsTest3 = [];
-
-  for (let i = 0; i < props.cars.length; i++) {
-    carsTest3.push(props.cars[i].brand);
-  }
+  let cars = [];
 
   for (let i = 0; i < props.cars.length; i++) {
     let singleCar = ({
@@ -20,18 +14,17 @@ function SearchCar(props) {
       cost: Number(props.cars[i].cost),
       date: props.cars[i].date,
     })
-    carsTest.push(singleCar);
+    cars.push(singleCar);
   }
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
   const handleChangeSearch = e => {
     const value = e.target.value;
     setSearchTerm(value);
   }
 
-  const resultTest = carsTest.filter(car => car.brand.toLowerCase().includes(searchTerm));
+  const resultTest = cars.filter(car => car.brand.toLowerCase().includes(searchTerm));
 
   const searchButton = () => {
     props.onChange(resultTest);

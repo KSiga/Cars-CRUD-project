@@ -29,39 +29,41 @@ const customStyles = { // style dla Modala
     },
 };
 
+let carsInitial = [
+    {
+        _id: 0, brand: 'fiat', model: '500 Cabrio', color: 'red', status: true, cost: '10',
+        date: '2022-02-24',
+    },
+    {
+        _id: 1, brand: 'citroen', model: 'Berlingo', color: 'white', status: true, cost: '70',
+        date: '2022-03-12',
+    },
+    {
+        _id: 2, brand: 'fiat', model: 'Panda Sport', color: 'blue', status: true, cost: '30',
+        date: '2022-03-18',
+    },
+    {
+        _id: 3, brand: 'audi', model: 'A4', color: 'black', status: false, cost: '50',
+        date: '2022-03-25',
+    },
+    {
+        _id: 4, brand: 'citroen', model: 'C4', color: 'black', status: false, cost: '90',
+        date: '2022-04-06',
+    },
+    {
+        _id: 5, brand: 'Kia', model: 'Ceed', color: 'white', status: false, cost: '60',
+        date: '2022-04-08',
+    },
+];
+
 class ListPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cars: [
-                {
-                    _id: 0, brand: 'fiat', model: '500 Cabrio', color: 'red', status: true, cost: '10',
-                    date: '2022-02-24'
-                },
-                {
-                    _id: 1, brand: 'citroen', model: 'Berlingo', color: 'white', status: true, cost: '70',
-                    date: '2022-03-12',
-                },
-                {
-                    _id: 2, brand: 'fiat', model: 'Panda Sport', color: 'blue', status: true, cost: '30',
-                    date: '2022-03-18',
-                },
-                {
-                    _id: 3, brand: 'audi', model: 'A4', color: 'black', status: false, cost: '50',
-                    date: '2022-03-25',
-                },
-                {
-                    _id: 4, brand: 'citroen', model: 'C4', color: 'black', status: false, cost: '90',
-                    date: '2022-04-06',
-                },
-                {
-                    _id: 5, brand: 'Kia', model: 'Ceed', color: 'white', status: false, cost: '60',
-                    date: '2022-04-08',
-                },
-            ],
+            cars: carsInitial,
             showModal: false,
             editCar: {},
-            carsFiltered: [],
+            carsFiltered: carsInitial,
         }
     }
 
@@ -69,24 +71,41 @@ class ListPage extends Component {
         const cars = [...this.state.cars];
         cars.unshift(car); // dodaje element na początek tablicy (push() na koniec)
         this.setState({ cars });
+        this.setState({ carsFiltered: cars });
     }
 
     carEdit(car) {
+        // cars
         const cars = [...this.state.cars];
         const index = cars.findIndex(index => index._id === car._id);
         if (index >= 0) {
             cars[index] = car;
             this.setState({ cars });
         }
+        // carsFiltered
+        const carsFiltered = [...this.state.carsFiltered];
+        const indexFiltered = carsFiltered.findIndex(index => index._id === car._id);
+        if (indexFiltered >= 0) {
+            carsFiltered[indexFiltered] = car;
+            this.setState({ carsFiltered });
+        }
+        //--------
         this.toggleModal();
     }
 
+    carEditHandler(car) {
+        this.toggleModal();
+        this.setState({ editCar: car });
+    }
+
     carDelete = _id => {
+        // cars
         let cars = [...this.state.cars];
-        let carsFiltered = [...this.state.carsFiltered]
         cars = cars.filter(car => car._id !== _id);
-        carsFiltered = carsFiltered.filter(car => car._id !== _id);
         this.setState({ cars });
+        // carsFiltered
+        let carsFiltered = [...this.state.carsFiltered];
+        carsFiltered = carsFiltered.filter(car => car._id !== _id);
         this.setState({ carsFiltered });
     }
 
@@ -96,19 +115,12 @@ class ListPage extends Component {
         })
     }
 
-    carEditHandler(car) {
-        this.toggleModal();
-        this.setState({ editCar: car });
-    }
-
     carShowSorted(cars) {
-        this.setState({ cars });
+        this.setState({ carsFiltered: cars });
     }
 
     carChangeSearch(cars) {
-        console.log(cars);
         this.setState({ carsFiltered: cars });
-        console.log(this.state.carsFiltered);
     }
 
     carValidation = (car) => {
@@ -178,15 +190,8 @@ class ListPage extends Component {
 
     render() {
 
-        const carListFiltered = this.state.carsFiltered.map(car => (
+        const carList = this.state.carsFiltered.map(car => (
             <FilteredCar key={car._id} {...car}
-                onDelete={() => this.carDelete(car._id)}
-                onEdit={(car) => this.carEditHandler(car)}
-            />
-        ))
-
-        const carList = this.state.cars.map(car => (
-            <Car key={car._id} {...car}
                 onDelete={() => this.carDelete(car._id)}
                 onEdit={(car) => this.carEditHandler(car)}
             />
@@ -204,7 +209,7 @@ class ListPage extends Component {
                     </div>
                     <div className='sortCarComponent'>
                         <SortCar
-                            cars={this.state.cars}
+                            cars={this.state.carsFiltered}
                             onSort={car => this.carShowSorted(car)}
                         />
                     </div>
@@ -220,7 +225,6 @@ class ListPage extends Component {
                     <div className='sortPanel'>
                     </div>
                     {carList}
-                    {carListFiltered}
                     <Modal
                         isOpen={this.state.showModal}
                         style={customStyles}
