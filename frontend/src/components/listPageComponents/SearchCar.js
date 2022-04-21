@@ -27,14 +27,14 @@ function SearchCar(props) {
   const resultTest = cars.filter(car => car.brand.toLowerCase().includes(searchTerm));
 
   const searchButton = () => {
-    props.onChange(resultTest);
+    props.onChange(resultTest, searchTerm);
     setSearchTerm('');
   }
 
   return (
     <div>
       <p>Wyszukaj</p>
-      <input className='inputSearch' type="text" value={searchTerm} onChange={handleChangeSearch} />
+      <input className='inputSearch' type="text" maxLength="14" value={searchTerm} onChange={handleChangeSearch} />
       <button onClick={() => searchButton()}>Szukaj</button>
       <ul>
         {resultTest.map(item => (

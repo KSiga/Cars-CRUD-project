@@ -5,7 +5,7 @@ function SortCar(props) {
     const [selectedOption, setSelectedOption] = useState('');
     const cars = props.cars;
 
-    const sortByDate = method => {
+    const sortByDate = (method, textOption) => {
         if (method === 'newest') {
             cars.sort((a, b) => {
                 if (a.date < b.date) return 1
@@ -20,10 +20,10 @@ function SortCar(props) {
                 return 0;
             })
         } else return;
-        props.onSort(cars);
+        props.onSort(cars, textOption);
     }
 
-    const sortById = method => {
+    const sortById = (method, textOption) => {
         if (method === 'highest') {
             cars.sort((a, b) => {
                 if (a._id < b._id) return 1
@@ -38,10 +38,10 @@ function SortCar(props) {
                 return 0;
             })
         } else return;
-        props.onSort(cars);
+        props.onSort(cars, textOption);
     }
 
-    const sortByCost = method => {
+    const sortByCost = (method, textOption) => {
         if (method === 'highest') {
             cars.sort((a, b) => {
                 if (a.cost < b.cost) return 1
@@ -57,10 +57,10 @@ function SortCar(props) {
             })
         }
         else return;
-        props.onSort(cars);
+        props.onSort(cars, textOption);
     }
 
-    const sortByStatus = method => {
+    const sortByStatus = (method, textOption) => {
         if (method === 'true') {
             cars.sort((a, b) => {
                 if (a.status < b.status) return 1
@@ -75,19 +75,21 @@ function SortCar(props) {
                 return 0;
             })
         } else return;
-        props.onSort(cars);
+        props.onSort(cars, textOption);
     }
 
     const selectOption = e => {
         setSelectedOption(e.target.value);
-        if (e.target.value === 'byNewestDate') sortByDate('newest');
-        if (e.target.value === 'byOldestDate') sortByDate('oldest');
-        if (e.target.value === 'byHighestId') sortById('highest');
-        if (e.target.value === 'byLowestId') sortById('lowest');
-        if (e.target.value === 'byHighestCost') sortByCost('highest');
-        if (e.target.value === 'byLowestCost') sortByCost('lowest');
-        if (e.target.value === 'byTrueStatus') sortByStatus('true');
-        if (e.target.value === 'byFalseStatus') sortByStatus('false');
+        let index = e.nativeEvent.target.selectedIndex; // wyszukanie indeksu wybrane elementu z select
+        let textOption = e.target[index].innerText;
+        if (e.target.value === 'byNewestDate') sortByDate('newest', textOption);
+        if (e.target.value === 'byOldestDate') sortByDate('oldest', textOption);
+        if (e.target.value === 'byHighestId') sortById('highest', textOption);
+        if (e.target.value === 'byLowestId') sortById('lowest', textOption);
+        if (e.target.value === 'byHighestCost') sortByCost('highest', textOption);
+        if (e.target.value === 'byLowestCost') sortByCost('lowest', textOption);
+        if (e.target.value === 'byTrueStatus') sortByStatus('true', textOption);
+        if (e.target.value === 'byFalseStatus') sortByStatus('false', textOption);
     }
 
     return (

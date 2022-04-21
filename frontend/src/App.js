@@ -28,4 +28,5 @@ export default App;
 
 /*
 - po dodaniu nowego rekordu, select z sortowaniem powinien ustawić się na 'default' - 10.04.2022
+- id tworzy się po długości tablicy (mogą być 2 takie same id) (w bazie bedzie automatycznie) - 19.04.2022
 */

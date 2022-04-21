@@ -98,28 +98,7 @@ class ListPage extends Component {
         this.setState({ editCar: car });
     }
 
-    carDelete = _id => {
-        // cars
-        let cars = [...this.state.cars];
-        cars = cars.filter(car => car._id !== _id);
-        this.setState({ cars });
-        // carsFiltered
-        let carsFiltered = [...this.state.carsFiltered];
-        carsFiltered = carsFiltered.filter(car => car._id !== _id);
-        this.setState({ carsFiltered });
-    }
-
-    toggleModal() {
-        this.setState({
-            showModal: !this.state.showModal,
-        })
-    }
-
-    carShowSorted(cars) {
-        this.setState({ carsFiltered: cars });
-    }
-
-    carChangeSearch(cars) {
+    checkCarLength = (cars) => {
         let carListError = document.querySelector('.carListError');
         if (cars.length === 0) {
             if (!Boolean(carListError)) {
@@ -133,6 +112,44 @@ class ListPage extends Component {
         if (carListError && cars.length > 0) {
             carListError.parentNode.removeChild(carListError);
         }
+    }
+
+    carDelete = _id => {
+        // cars
+        let cars = [...this.state.cars];
+        cars = cars.filter(car => car._id !== _id);
+        this.setState({ cars });
+        // carsFiltered
+        let carsFiltered = [...this.state.carsFiltered];
+        carsFiltered = carsFiltered.filter(car => car._id !== _id);
+        this.setState({ carsFiltered });
+        // ---
+        this.checkCarLength(carsFiltered);
+    }
+
+    toggleModal() {
+        this.setState({
+            showModal: !this.state.showModal,
+        })
+    }
+
+    carShowSorted(cars, textOption) {
+        let sortInfoPanel = document.querySelector('.sortInfo');
+        sortInfoPanel.innerText = `Sortowanie: ${textOption}`;
+        this.setState({ carsFiltered: cars });
+    }
+
+    carChangeSearch(cars, searchTerm) {
+        let searchInfoPanel = document.querySelector('.searchInfo');
+        if (!searchTerm.trim()) { // jeśli w wyszukiwarce są same spacje
+            searchInfoPanel.innerText = `Wyszukiwana fraza: ...`;
+            if (searchTerm === '') {  // jeśli nie ma nic
+                searchInfoPanel.innerText = `Wszystkie wyniki...`;
+            }
+        } else { // jeśli jest jakaś wyszukiwana wartość
+            searchInfoPanel.innerText = `Wyszukiwana fraza: ${searchTerm}`;
+        }
+        this.checkCarLength(cars);
         this.setState({ carsFiltered: cars });
     }
 
@@ -223,19 +240,23 @@ class ListPage extends Component {
                     <div className='sortCarComponent'>
                         <SortCar
                             cars={this.state.carsFiltered}
-                            onSort={car => this.carShowSorted(car)}
+                            onSort={(cars, textOption) => this.carShowSorted(cars, textOption)}
                         />
                     </div>
                     <div className='searchCarComponent'>
                         <SearchCar
                             cars={[...this.state.cars]}
-                            onChange={(cars) => this.carChangeSearch(cars)}
+                            onChange={(cars, searchTerm) => this.carChangeSearch(cars, searchTerm)}
                         />
                     </div>
                 </div>
 
                 <div className='listPageRight'>
-                    <div className='sortPanel'>
+                    <div className='infoPanel'>
+                        <div className='sortInfo'>
+                        </div>
+                        <div className='searchInfo'>
+                        </div>
                     </div>
                     {carList}
                     <Modal
