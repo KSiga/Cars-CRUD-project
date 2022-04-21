@@ -102,51 +102,6 @@ header img {
     background-color: rgb(138, 138, 138);
 }
 
-.carList {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    height: 160px;
-    border-radius: 20px;
-    margin: 14px auto;
-    padding: 10px;
-    background-color: rgb(182, 182, 182);
-}
-
-.carList .carInformation {
-    width: 84%;
-    height: 130px;
-    font-size: 1.2rem;
-    margin-right: 20px;
-    padding: 4px;
-    background-color: rgb(150, 150, 150);
-}
-
-.carList .carButtons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    width: 10%;
-    height: 130px;
-    background-color: rgb(175, 175, 175);
-}
-
-.carList .carButtons button {
-    width: 70%;
-    height: 50px;
-    border: none;
-    font-size: 1.4rem;
-    background-color: rgb(116, 116, 116);
-}
-
-.carList .carButtons button:hover {
-    cursor: pointer;
-    background-color: rgb(37, 37, 37);
-    color: white;
-}
-
 /*--------------------------------------------------------------------------------*/
 
 footer {

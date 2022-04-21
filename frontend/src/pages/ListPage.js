@@ -8,11 +8,15 @@ import SearchCar from '../components/listPageComponents/SearchCar';
 import FilteredCar from '../components/listPageComponents/FilteredCar';
 import Modal from 'react-modal';
 
+import '../style/listPage/car.css';
 import '../style/listPage/editCar.css';
 import '../style/listPage/addCar.css';
 import '../style/listPage/sortCar.css';
 import '../style/listPage/moreInfoCar.css';
 import '../style/listPage/searchCar.css';
+
+const request = require('request');
+const fs = require('fs');
 
 const customStyles = { // style dla Modala
     content: {
