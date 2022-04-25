@@ -15,9 +15,6 @@ import '../style/listPage/sortCar.css';
 import '../style/listPage/moreInfoCar.css';
 import '../style/listPage/searchCar.css';
 
-const request = require('request');
-const fs = require('fs');
-
 const customStyles = { // style dla Modala
     content: {
         display: 'block',

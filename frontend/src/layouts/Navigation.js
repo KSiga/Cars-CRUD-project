@@ -1,17 +1,22 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useContext } from "react";
+import { UserContext } from '../store/UserContext';
+
 const list = [
     { name: "START", path: "/", exact: true },
     { name: "LIST", path: "/list" },
-    { name: "ADMIN", path: '/admin' },
+    { name: "LOGIN", path: '/login' },
 ]
+
 const Navigation = () => {
+    const { user } = useContext(UserContext);
     const menuList = list.map(item => (
-        <NavLink key={item.name} to={item.path} /*exact={item.exact ? item.exact : false}*/>{item.name}</NavLink>
+        <NavLink key={item.name} to={item.path}>{item.name}</NavLink>
     ))
     return (
         <nav>
-            {menuList}
+            {menuList} {user === true ? 'Zalogowany' : 'Niezalogowany'}
         </nav>
     )
 }
