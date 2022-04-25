@@ -1,6 +1,4 @@
-import React from 'react';
-import { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useContext } from "react";
 import { UserContext } from '../../store/UserContext';
@@ -16,8 +14,9 @@ const LoggedAdmin = props => {
         loginStatus = <Navigate to='/login' />;
     }
     return (
-        <div>
-            <button onClick={() => logOut()}>Wyloguj</button>
+        <div className='loggedAdmin'>
+            <h1>Panel admina: </h1>
+            <button className='loggedAdminButton' onClick={() => logOut()}>Wyloguj</button>
             {loginStatus}
         </div>
     )

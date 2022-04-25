@@ -14,6 +14,8 @@ import '../style/listPage/addCar.css';
 import '../style/listPage/sortCar.css';
 import '../style/listPage/moreInfoCar.css';
 import '../style/listPage/searchCar.css';
+import '../style/listPage/loginPage.css';
+import '../style/listPage/loggedAdmin.css';
 
 const customStyles = { // style dla Modala
     content: {

@@ -1,0 +1,31 @@
+.loggedAdmin {
+    position: relative;
+    width: 80%;
+    height: 300px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: rgb(173, 173, 173);
+}
+
+.loggedAdmin h1 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.loggedAdmin .loggedAdminButton {
+    position: absolute;
+    padding: 4px;
+    width: 30%;
+    font-size: 1.6rem;
+    left: 20px;
+    bottom: 20px;
+    border: 1px solid green;
+    background-color: #2d8530;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.loggedAdmin .loggedAdminButton:hover {
+    background-color: #1d7a20;
+}
