@@ -7,6 +7,7 @@ import SortCar from '../components/listPageComponents/SortCar';
 import SearchCar from '../components/listPageComponents/SearchCar';
 import FilteredCar from '../components/listPageComponents/FilteredCar';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 import '../style/listPage/car.css';
 import '../style/listPage/editCar.css';
@@ -63,23 +64,41 @@ class ListPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cars: carsInitial,
+            cars: [],
+            carsFiltered: [],
             showModal: false,
             editCar: {},
-            carsFiltered: carsInitial,
         }
     }
 
-    carAdd = (car) => {
-        const cars = [...this.state.cars];
-        cars.unshift(car); // dodaje element na początek tablicy (push() na koniec)
+    componentDidMount() {
+        this.fetchCars();
+    }
+
+    async fetchCars() {
+        const res = await axios.get('http://localhost:3001/api/cars');
+        const cars = res.data;
+
         this.setState({ cars });
         this.setState({ carsFiltered: cars });
     }
 
-    carEdit(car) {
+    async carAdd(car) {
+        const cars = [...this.state.cars];
+        // backend
+        const res = await axios.post('http://localhost:3001/api/cars', car);
+        const newCar = res.data;
+        // frontend
+        cars.unshift(newCar); // dodaje element na początek tablicy (push() na koniec)
+        this.setState({ cars });
+        this.setState({ carsFiltered: cars });
+    }
+
+    async carEdit(car) {
+        await axios.put('http://localhost:3001/api/cars/' + car._id, car);
         // cars
         const cars = [...this.state.cars];
+        console.log(cars);
         const index = cars.findIndex(index => index._id === car._id);
         if (index >= 0) {
             cars[index] = car;
@@ -117,7 +136,8 @@ class ListPage extends Component {
         }
     }
 
-    carDelete = _id => {
+    async carDelete(_id) {
+        await axios.delete('http://localhost:3001/api/cars/' + _id);
         // cars
         let cars = [...this.state.cars];
         cars = cars.filter(car => car._id !== _id);

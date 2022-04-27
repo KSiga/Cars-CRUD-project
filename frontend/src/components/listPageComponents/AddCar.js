@@ -40,7 +40,7 @@ function AddCar(props) {
 
     const addCar = () => {
         const car = ({
-            _id: props.cars.length,
+            //  _id: props.cars.length,
             brand: brand,
             model: model,
             color: color,
